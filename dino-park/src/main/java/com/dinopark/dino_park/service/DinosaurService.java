@@ -31,4 +31,38 @@ public class DinosaurService {
         return repository.save(dinosaur);
 
     }
+
+    public Dinosaur getDinosaurById(Long id){
+
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Dinosaur not found"));
+    }
+
+    public Dinosaur updateDinosaur(Long id, Dinosaur updatedDinosaur){
+
+        Dinosaur dinosaur = getDinosaurById(id);
+
+        dinosaur.setName(
+                updatedDinosaur.getName()
+        );
+
+        dinosaur.setSpecies(
+                updatedDinosaur.getSpecies()
+        );
+
+        dinosaur.setCarnivore(
+                updatedDinosaur.getCarnivore()
+        );
+
+        dinosaur.setEnergy(
+                updatedDinosaur.getEnergy()
+        );
+
+        return repository.save(
+                dinosaur
+        );
+    }
+
+    public void deleteDinosaur(Long id){
+        repository.deleteById(id);
+    }
 }
