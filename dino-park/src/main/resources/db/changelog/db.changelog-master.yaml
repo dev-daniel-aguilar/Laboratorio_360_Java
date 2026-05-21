@@ -17,3 +17,21 @@ databaseChangeLog:
         - sqlFile:
             path: db/changelog/changes/002-create-tourist-table.sql
             relativeToChangelogFile: false
+
+  - changeSet:
+      id: 003
+      author: daniel
+      changes:
+
+        - sqlFile:
+            path: db/changelog/changes/003-create-zone-table.sql
+            relativeToChangelogFile: false
+
+  - changeSet:
+      id: 004
+      author: daniel
+      changes:
+
+        - sqlFile:
+            path: db/changelog/changes/004-add-zone-id-to-tourist.sql
+            relativeToChangelogFile: false

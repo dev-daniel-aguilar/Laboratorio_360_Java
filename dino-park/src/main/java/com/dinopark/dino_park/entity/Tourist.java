@@ -2,6 +2,7 @@ package com.dinopark.dino_park.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="tourist")
@@ -30,4 +31,13 @@ public class Tourist {
 
     @Column(nullable=false)
     private Boolean insidePark;
+
+    //Muchos touristas a una zona
+    @ManyToOne
+
+    @JoinColumn(name="zone_id")
+
+    @JsonIgnoreProperties("tourists")
+
+    private Zone zone;
 }
