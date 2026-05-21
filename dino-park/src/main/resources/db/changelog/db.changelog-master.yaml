@@ -8,3 +8,12 @@ databaseChangeLog:
         - sqlFile:
             path: db/changelog/changes/001-create-dinosaur-table.sql
             relativeToChangelogFile: false
+
+  - changeSet:
+      id: 002
+      author: daniel
+      changes:
+
+        - sqlFile:
+            path: db/changelog/changes/002-create-tourist-table.sql
+            relativeToChangelogFile: false
