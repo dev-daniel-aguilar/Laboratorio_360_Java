@@ -6,7 +6,7 @@ El sistema permite gestionar dinosaurios, turistas, zonas del parque, control en
 
 ---
 
-# 🚀 Tecnologías Utilizadas
+# Tecnologías Utilizadas
 
 - Java 17
 - Spring Boot
