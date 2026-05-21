@@ -3,6 +3,10 @@ package com.dinopark.dino_park.service;
 import com.dinopark.dino_park.entity.EnergyPlant;
 import com.dinopark.dino_park.entity.ParkEvent;
 import com.dinopark.dino_park.repository.ParkEventRepository;
+import com.dinopark.dino_park.event.EventType;
+import com.dinopark.dino_park.event.ParkEventFactory;
+import com.dinopark.dino_park.observer.ParkNotificationService;
+import com.dinopark.dino_park.observer.MonitoringAlertService;
 
 import org.springframework.stereotype.Service;
 
@@ -17,12 +21,24 @@ public class ParkEventService {
 
     private final EnergyPlantService energyPlantService;
 
-    public ParkEventService(ParkEventRepository repository, EnergyPlantService energyPlantService){
+    private final ParkEventFactory eventFactory;
+
+    private final ParkNotificationService notificationService;
+
+    private final MonitoringAlertService monitoringAlertService;
+
+    public ParkEventService(ParkEventRepository repository, EnergyPlantService energyPlantService, ParkEventFactory eventFactory, ParkNotificationService notificationService, MonitoringAlertService
+            monitoringAlertService){
 
         this.repository = repository;
 
-        this.energyPlantService =
-                energyPlantService;
+        this.energyPlantService = energyPlantService;
+
+        this.eventFactory = eventFactory;
+
+        this.notificationService = notificationService;
+
+        this.monitoringAlertService = monitoringAlertService;
 
     }
 
@@ -48,28 +64,17 @@ public class ParkEventService {
 
         energyPlantService.consumeEnergy(energyPlantId, 500);
 
-        return buildEvent(
-                "BLACKOUT",
-                "Massive blackout in the park"
-        );
-
-    }
-
-    private ParkEvent buildEvent(String eventType, String description){
-
         ParkEvent event =
-                ParkEvent.builder()
-                        .eventType(eventType)
-                        .description(description)
-                        .active(true)
-                        .createdAt(
-                                LocalDateTime.now()
-                        )
-                        .build();
-
+                eventFactory.createEvent(
+                        EventType.BLACKOUT
+                );
+        notificationService.notifyObservers(
+                "BLACKOUT event triggered"
+        );
         return repository.save(event);
 
     }
+
 
     public ParkEvent createStormEvent(
             Long energyPlantId
@@ -77,38 +82,56 @@ public class ParkEventService {
 
         energyPlantService.consumeEnergy(energyPlantId, 300);
 
-        return buildEvent(
-                "STORM",
-                "Torrential storm affected park operations"
+        ParkEvent event =
+                eventFactory.createEvent(
+                        EventType.STORM
+                );
+        notificationService.notifyObservers(
+                "STORM event triggered"
         );
+        return repository.save(event);
 
     }
 
     public ParkEvent createDinosaurEscapeEvent(){
 
-        return buildEvent(
-                "DINO_ESCAPE",
-                "A dinosaur escaped from its enclosure"
+        ParkEvent event =
+                eventFactory.createEvent(
+                        EventType.DINO_ESCAPE
+                );
+        notificationService.notifyObservers(
+                "Dinosaur escape detected"
         );
+        return repository.save(event);
 
     }
 
     public ParkEvent createVehicleFailureEvent(){
 
-        return buildEvent(
-                "VEHICLE_FAILURE",
-                "A vehicle failed during park operations"
+        ParkEvent event =
+                eventFactory.createEvent(
+                        EventType.VEHICLE_FAILURE
+                );
+        notificationService.notifyObservers(
+                "VehicleFailure event triggered"
         );
+        return repository.save(event);
 
     }
 
     public ParkEvent createDiscountHourEvent(){
 
-        return buildEvent(
-                "DISCOUNT_HOUR",
-                "Discount hour activated for visitors"
+        ParkEvent event =
+                eventFactory.createEvent(
+                        EventType.DISCOUNT_HOUR
+                );
+        notificationService.notifyObservers(
+                "DiscountHour event triggered"
         );
+        return repository.save(event);
 
     }
+
+
 
 }
