@@ -1,1 +1,10 @@
 databaseChangeLog:
+
+  - changeSet:
+      id: 001
+      author: daniel
+      changes:
+
+        - sqlFile:
+            path: db/changelog/changes/001-create-dinosaur-table.sql
+            relativeToChangelogFile: false
