@@ -43,4 +43,46 @@ public class DinosaurController {
         );
 
     }
+
+    @GetMapping("/{id}")
+
+    public Dinosaur getById(
+
+            @PathVariable
+            Long id
+
+    ){
+
+        return service.getDinosaurById(id);
+
+    }
+
+    @PutMapping("/{id}")
+
+    public Dinosaur update(
+
+            @PathVariable
+            Long id,
+
+            @RequestBody
+            Dinosaur dinosaur
+
+    ){
+
+        return service.updateDinosaur(id, dinosaur);
+
+    }
+
+    @DeleteMapping("/{id}")
+
+    public void delete(
+
+            @PathVariable
+            Long id
+
+    ){
+
+        service.deleteDinosaur(id);
+
+    }
 }
