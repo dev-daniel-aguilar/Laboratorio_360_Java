@@ -37,7 +37,50 @@ Repository
 
 Entity
 ```
+#  Flujo General del Sistema
 
+```mermaid
+flowchart TD
+
+    A[Inicio del sistema] --> B[Spring Boot inicia]
+    B --> C[Liquibase crea/actualiza tablas]
+    C --> D[Usuario prueba endpoints en Postman]
+    D --> E[Controller recibe petición]
+    E --> F[Service aplica lógica de negocio]
+    F --> G[Repository accede a MySQL]
+    G --> H[Respuesta JSON al cliente]
+
+    B --> I[Scheduler automático]
+    I --> J[Genera evento aleatorio]
+    J --> K[Factory crea ParkEvent]
+    K --> L[Observer notifica monitoreo]
+    L --> M[Evento se guarda en BD]
+ ```
+---
+#  Diagrama de Secuencia - Evento BLACKOUT
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Controller
+    participant Service
+    participant Factory
+    participant Observer
+    participant Repository
+    participant DB
+
+    Client->>Controller: POST blackout
+    Controller->>Service: createBlackoutEvent()
+    Service->>Factory: createEvent()
+    Factory-->>Service: ParkEvent
+    Service->>Observer: notifyObservers()
+    Service->>Repository: save(event)
+    Repository->>DB: INSERT event
+    DB-->>Repository: saved
+    Repository-->>Service: event
+    Service-->>Controller: response
+```
+---
 ### Capas implementadas
 
 - **Controller:** Manejo de endpoints REST
