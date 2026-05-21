@@ -35,3 +35,12 @@ databaseChangeLog:
         - sqlFile:
             path: db/changelog/changes/004-add-zone-id-to-tourist.sql
             relativeToChangelogFile: false
+
+  - changeSet:
+      id: 005
+      author: daniel
+      changes:
+
+        - sqlFile:
+            path: db/changelog/changes/005-create-energy-plant-table.sql
+            relativeToChangelogFile: false
