@@ -44,3 +44,12 @@ databaseChangeLog:
         - sqlFile:
             path: db/changelog/changes/005-create-energy-plant-table.sql
             relativeToChangelogFile: false
+
+  - changeSet:
+      id: 006
+      author: daniel
+      changes:
+
+        - sqlFile:
+            path: db/changelog/changes/006-create-park-event-table.sql
+            relativeToChangelogFile: false
