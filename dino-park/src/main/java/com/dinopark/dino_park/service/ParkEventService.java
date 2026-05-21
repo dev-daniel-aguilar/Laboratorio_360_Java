@@ -48,10 +48,65 @@ public class ParkEventService {
 
         energyPlantService.consumeEnergy(energyPlantId, 500);
 
-        ParkEvent event = ParkEvent.builder().eventType("BLACKOUT").description("Massive blackout in the park").active(true).createdAt(LocalDateTime.now()).build();
+        return buildEvent(
+                "BLACKOUT",
+                "Massive blackout in the park"
+        );
 
-        return repository.save(
-                event
+    }
+
+    private ParkEvent buildEvent(String eventType, String description){
+
+        ParkEvent event =
+                ParkEvent.builder()
+                        .eventType(eventType)
+                        .description(description)
+                        .active(true)
+                        .createdAt(
+                                LocalDateTime.now()
+                        )
+                        .build();
+
+        return repository.save(event);
+
+    }
+
+    public ParkEvent createStormEvent(
+            Long energyPlantId
+    ){
+
+        energyPlantService.consumeEnergy(energyPlantId, 300);
+
+        return buildEvent(
+                "STORM",
+                "Torrential storm affected park operations"
+        );
+
+    }
+
+    public ParkEvent createDinosaurEscapeEvent(){
+
+        return buildEvent(
+                "DINO_ESCAPE",
+                "A dinosaur escaped from its enclosure"
+        );
+
+    }
+
+    public ParkEvent createVehicleFailureEvent(){
+
+        return buildEvent(
+                "VEHICLE_FAILURE",
+                "A vehicle failed during park operations"
+        );
+
+    }
+
+    public ParkEvent createDiscountHourEvent(){
+
+        return buildEvent(
+                "DISCOUNT_HOUR",
+                "Discount hour activated for visitors"
         );
 
     }

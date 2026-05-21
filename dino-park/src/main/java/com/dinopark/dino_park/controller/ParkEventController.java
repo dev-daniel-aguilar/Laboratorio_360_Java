@@ -38,4 +38,39 @@ public class ParkEventController {
         return service.createBlackoutEvent(energyPlantId);
     }
 
+    @PostMapping("/storm")
+    public ParkEvent createStorm(
+
+            @RequestParam
+            Long energyPlantId
+
+    ){
+
+        return service.createStormEvent(
+                energyPlantId
+        );
+
+    }
+
+    @PostMapping("/dinosaur-escape")
+    public ParkEvent createDinosaurEscape(){
+
+        return service.createDinosaurEscapeEvent();
+
+    }
+
+    @PostMapping("/vehicle-failure")
+    public ParkEvent createVehicleFailure(){
+
+        return service.createVehicleFailureEvent();
+
+    }
+
+    @PostMapping("/discount-hour")
+    public ParkEvent createDiscountHour(){
+
+        return service.createDiscountHourEvent();
+
+    }
+
 }
